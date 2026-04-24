@@ -18,7 +18,7 @@
     /* =============================================
        CSS CUSTOM PROPERTIES
     ============================================= */
-    :root {
+    [<!DOCTYPE html>
       --navy: #050F2C;
       --navy-mid: #0A1F54;
       --navy-light: #112266;
@@ -1294,8 +1294,8 @@
             </div>
           </div>
           <div class="nav-logo-text">
-            <span class="nav-logo-name notranslate">HEGEEZ</span>
-            <span class="nav-logo-sub notranslate">Global Energy Security</span>
+            <span class="nav-logo-name">HEGEEZ</span>
+            <span class="nav-logo-sub">Global Energy Security</span>
           </div>
         </a>
 
@@ -1738,54 +1738,23 @@
         <!-- Form -->
         <div class="liaison-form">
           <div class="label" style="margin-bottom:28px;color:rgba(0,239,255,0.7);">Secure Enquiry Portal</div>
-          <form id="enquiryForm" action="https://formspree.io/f/mlgaznvv" method="POST" style="display:contents;">
-                                  <div id="form-success" style="display:none;color:#00D26A;font-size:16px;margin-bottom:18px;font-weight:600;">Thank you! Your enquiry has been received. We will respond within 24 business hours.</div>
-                        <div id="form-errors" style="color:#FF4444;font-size:13px;margin-bottom:12px;display:none;"></div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="f-name">Full Name</label>
-                <input class="form-input" type="text" id="f-name" name="name" placeholder="Full name" autocomplete="name" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="f-org">Organisation</label>
-                <input class="form-input" type="text" id="f-org" name="organisation" placeholder="Company / Fund">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="f-email">Email Address</label>
-                <input class="form-input" type="email" id="f-email" name="email" placeholder="institutional@company.com" autocomplete="email" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="f-phone">Phone</label>
-                <input class="form-input" type="tel" id="f-phone" name="phone" placeholder="+1 or +44..." autocomplete="tel">
-              </div>
+          <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+            <input type="hidden" name="access_key" value="fc03da04-c509-4eb3-8d62-c2bbd89cd9f9">
+            <input type="hidden" name="to_email" value="info@hegeez.com">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input class="form-input" type="text" name="name" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="f-interest">Primary Interest</label>
-              <select class="form-select" id="f-interest" name="interest" required>
-                <option value="" disabled selected>Select commodity / service</option>
-                <option value="bonny-light">Bonny Light Crude Liftings — Nigeria</option>
-                <option value="spodumene">Lithium Spodumene Offtake — Ethiopia</option>
-                <option value="dual">Dual Commodity — Both Corridors</option>
-                <option value="compliance">EO 14154 Compliance Advisory</option>
-                <option value="advisory">Strategic Supply Chain Advisory</option>
-              </select>
+              <label class="form-label">Your Email</label>
+              <input class="form-input" type="email" name="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="f-volume">Estimated Volume / Requirement</label>
-              <input class="form-input" type="text" id="f-volume" name="volume" placeholder="e.g. 50,000 bbls/month or 200 MT Spodumene">
+              <label class="form-label">Your Message</label>
+              <textarea class="form-textarea" name="message" placeholder="Write your message here" required></textarea>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="f-message">Strategic Context</label>
-              <textarea class="form-textarea" id="f-message" name="message" placeholder="Briefly describe your supply chain requirement, timeline, and any compliance constraints..."></textarea>
-            </div>
-            <button class="form-submit" type="submit">
-              Submit Confidential Enquiry
-            </button>
-            <p style="font-family:'Inter',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);margin-top:14px;line-height:1.6;">
-              All enquiries are confidential. Response within 24 business hours. Hegeez Global Energy Security processes data in accordance with UK GDPR.
-            </p>
+            <button class="form-submit" type="submit">Send Message</button>
+            <p id="result" style="font-family:'Inter',sans-serif;font-size:13px;margin-top:14px;line-height:1.6;"></p>
           </form>
         </div>
       </div>
@@ -1794,18 +1763,6 @@
 
   <!-- ===================== FOOTER ===================== -->
   <footer class="footer" aria-label="Footer">
-      <!-- Language Selector -->
-      <div style="position:fixed;top:16px;right:16px;z-index:2000;">
-        <select id="langSelect" style="padding:6px 12px;border-radius:6px;border:1px solid #ccc;">
-          <option value="en">English</option>
-          <option value="am">Amharic</option>
-          <option value="om">Oromo</option>
-          <option value="so">Somali</option>
-          <option value="sw">Swahili</option>
-          <option value="fr">French</option>
-          <option value="ar">Arabic</option>
-        </select>
-      </div>
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand">
@@ -1815,8 +1772,8 @@
                    onerror="this.style.display='none'">
             </div>
             <div class="nav-logo-text">
-              <span class="nav-logo-name notranslate" style="color:var(--white)">HEGEEZ</span>
-              <span class="nav-logo-sub notranslate">Global Energy Security</span>
+              <span class="nav-logo-name" style="color:var(--white)">HEGEEZ</span>
+              <span class="nav-logo-sub">Global Energy Security</span>
             </div>
           </div>
           <p class="footer-tagline">
@@ -1876,115 +1833,27 @@
 
   <!-- ===================== JAVASCRIPT ===================== -->
   <script>
-                // Show custom success message after Formspree submission
-                document.getElementById('enquiryForm').addEventListener('submit', function(e) {
-                  var form = this;
-                  if (form.checkValidity() && document.getElementById('form-errors').style.display === 'none') {
-                    e.preventDefault();
-                    var formData = new FormData(form);
-                    fetch(form.action, {
-                      method: 'POST',
-                      body: formData,
-                      headers: { 'Accept': 'application/json' }
-                    }).then(function(response) {
-                      if (response.ok) {
-                        form.style.display = 'none';
-                        document.getElementById('form-success').style.display = 'block';
-                      } else {
-                        response.json().then(function(data) {
-                          var errorDiv = document.getElementById('form-errors');
-                          errorDiv.innerHTML = (data.errors && data.errors.length) ? data.errors.map(function(err){return '<div>' + err.message + '</div>';}).join('') : 'Something went wrong. Please try again.';
-                          errorDiv.style.display = 'block';
-                        });
-                      }
-                    }).catch(function() {
-                      var errorDiv = document.getElementById('form-errors');
-                      errorDiv.innerHTML = 'Something went wrong. Please try again.';
-                      errorDiv.style.display = 'block';
-                    });
-                  }
-                }, true);
-            // Enhanced form validation
-            document.getElementById('enquiryForm').addEventListener('submit', function(e) {
-              var errors = [];
-              var name = document.getElementById('f-name').value.trim();
-              var email = document.getElementById('f-email').value.trim();
-              var interest = document.getElementById('f-interest').value;
-              var org = document.getElementById('f-org').value.trim();
-              var phone = document.getElementById('f-phone').value.trim();
-              var volume = document.getElementById('f-volume').value.trim();
-              var message = document.getElementById('f-message').value.trim();
-
-              // Name
-              if (!name) errors.push('Full Name is required.');
-              // Email
-              if (!email || !/^\S+@\S+\.\S+$/.test(email)) errors.push('A valid Email Address is required.');
-              // Organisation
-              if (!org) errors.push('Organisation is required.');
-              // Phone
-              if (!phone || !/^\+?[0-9\-\s]{7,}$/.test(phone)) errors.push('A valid Phone number is required.');
-              // Interest
-              if (!interest) errors.push('Please select your Primary Interest.');
-              // Volume
-              if (!volume) errors.push('Estimated Volume / Requirement is required.');
-              // Message
-              if (!message) errors.push('Strategic Context is required.');
-
-              var errorDiv = document.getElementById('form-errors');
-              if (errors.length > 0) {
-                e.preventDefault();
-                errorDiv.innerHTML = errors.map(function(err){return '<div>' + err + '</div>';}).join('');
-                errorDiv.style.display = 'block';
-                window.scrollTo({top: errorDiv.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'});
-              } else {
-                errorDiv.style.display = 'none';
-              }
-            });
-        // Google Translate integration
-        function googleTranslateElementInit() {
-          new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,am,om,so,sw,fr,ar',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-          }, 'google_translate_element');
-        }
-
-        // Add Google Translate script
-        (function() {
-          var gt = document.createElement('script');
-          gt.type = 'text/javascript';
-          gt.async = true;
-          gt.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-          document.body.appendChild(gt);
-        })();
-
-        // Helper to trigger Google Translate
-        function triggerGoogleTranslate(lang) {
-          var select = document.querySelector('.goog-te-combo');
-          if (select) {
-            select.value = lang;
-            select.dispatchEvent(new Event('change'));
-          }
-        }
-
-        // Language selector handler
-        document.getElementById('langSelect').addEventListener('change', function() {
-          var lang = this.value;
-          triggerGoogleTranslate(lang);
-        });
-
-        // Auto-detect browser language and set
-        window.addEventListener('DOMContentLoaded', function() {
-          var userLang = navigator.language || navigator.userLanguage;
-          var langMap = { 'en': 'en', 'am': 'am', 'om': 'om', 'so': 'so', 'sw': 'sw', 'fr': 'fr', 'ar': 'ar' };
-          var shortLang = userLang.split('-')[0];
-          if (langMap[shortLang]) {
-            document.getElementById('langSelect').value = langMap[shortLang];
-            setTimeout(function() {
-              triggerGoogleTranslate(langMap[shortLang]);
-            }, 2000);
+      // Web3Forms AJAX handler for contact form
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        const result = document.getElementById('result');
+        contactForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          result.textContent = "Sending...";
+          const formData = new FormData(contactForm);
+          const response = await fetch(contactForm.action, {
+            method: contactForm.method,
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (response.ok) {
+            result.textContent = "Thank you! Your message has been sent.";
+            contactForm.reset();
+          } else {
+            result.textContent = "Something went wrong. Please try again.";
           }
         });
+      }
     // Mobile menu
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
