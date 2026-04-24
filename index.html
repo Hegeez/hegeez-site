@@ -1738,23 +1738,56 @@
         <!-- Form -->
         <div class="liaison-form">
           <div class="label" style="margin-bottom:28px;color:rgba(0,239,255,0.7);">Secure Enquiry Portal</div>
-          <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+          <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="fc03da04-c509-4eb3-8d62-c2bbd89cd9f9">
             <input type="hidden" name="to_email" value="info@hegeez.com">
-            <div class="form-group">
-              <label class="form-label">Your Name</label>
-              <input class="form-input" type="text" name="name" placeholder="Enter your name" required>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-name">Full Name</label>
+                <input class="form-input" type="text" id="f-name" name="name" placeholder="Full name" autocomplete="name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-org">Organisation</label>
+                <input class="form-input" type="text" id="f-org" name="organisation" placeholder="Company / Fund">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-email">Email Address</label>
+                <input class="form-input" type="email" id="f-email" name="email" placeholder="institutional@company.com" autocomplete="email" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-phone">Phone</label>
+                <input class="form-input" type="tel" id="f-phone" name="phone" placeholder="+1 or +44..." autocomplete="tel">
+              </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Your Email</label>
-              <input class="form-input" type="email" name="email" placeholder="Enter your email" required>
+              <label class="form-label" for="f-interest">Primary Interest</label>
+              <select class="form-select" id="f-interest" name="interest" required>
+                <option value="" disabled selected>Select commodity / service</option>
+                <option value="bonny-light">Bonny Light Crude Liftings — Nigeria</option>
+                <option value="spodumene">Lithium Spodumene Offtake — Ethiopia</option>
+                <option value="dual">Dual Commodity — Both Corridors</option>
+                <option value="compliance">EO 14154 Compliance Advisory</option>
+                <option value="advisory">Strategic Supply Chain Advisory</option>
+              </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Your Message</label>
-              <textarea class="form-textarea" name="message" placeholder="Write your message here" required></textarea>
+              <label class="form-label" for="f-volume">Estimated Volume / Requirement</label>
+              <input class="form-input" type="text" id="f-volume" name="volume" placeholder="e.g. 50,000 bbls/month or 200 MT Spodumene">
             </div>
-            <button class="form-submit" type="submit">Send Message</button>
-            <p id="result" style="font-family:'Inter',sans-serif;font-size:13px;margin-top:14px;line-height:1.6;"></p>
+            <div class="form-group">
+              <label class="form-label" for="f-message">Strategic Context</label>
+              <textarea class="form-textarea" id="f-message" name="message" placeholder="Briefly describe your supply chain requirement, timeline, and any compliance constraints..." required></textarea>
+            </div>
+            <button class="form-submit" type="submit">
+              Submit Confidential Enquiry
+            </button>
+            <p style="font-family:'Inter',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);margin-top:14px;line-height:1.6;">
+              All enquiries are confidential. Response within 24 business hours. Hegeez Global Energy Security processes data in accordance with UK GDPR.
+            </p>
+            <div id="form-success" style="display:none;color:#00D26A;font-size:16px;margin-bottom:18px;font-weight:600;">Thank you! Your enquiry has been received. We will respond within 24 business hours.</div>
+            <div id="form-errors" style="color:#FF4444;font-size:13px;margin-bottom:12px;display:none;"></div>
           </form>
         </div>
       </div>
@@ -1836,21 +1869,54 @@
       // Web3Forms AJAX handler for contact form
       const contactForm = document.getElementById('contact-form');
       if (contactForm) {
-        const result = document.getElementById('result');
+        const successDiv = document.getElementById('form-success');
+        const errorDiv = document.getElementById('form-errors');
         contactForm.addEventListener('submit', async (e) => {
           e.preventDefault();
-          result.textContent = "Sending...";
+          successDiv.style.display = 'none';
+          errorDiv.style.display = 'none';
+          let errors = [];
+          const name = document.getElementById('f-name').value.trim();
+          const email = document.getElementById('f-email').value.trim();
+          const interest = document.getElementById('f-interest').value;
+          const org = document.getElementById('f-org').value.trim();
+          const phone = document.getElementById('f-phone').value.trim();
+          const volume = document.getElementById('f-volume').value.trim();
+          const message = document.getElementById('f-message').value.trim();
+          // Validation
+          if (!name) errors.push('Full Name is required.');
+          if (!email || !/^\S+@\S+\.\S+$/.test(email)) errors.push('A valid Email Address is required.');
+          if (!org) errors.push('Organisation is required.');
+          if (!phone || !/^\+?[0-9\-\s]{7,}$/.test(phone)) errors.push('A valid Phone number is required.');
+          if (!interest) errors.push('Please select your Primary Interest.');
+          if (!volume) errors.push('Estimated Volume / Requirement is required.');
+          if (!message) errors.push('Strategic Context is required.');
+          if (errors.length > 0) {
+            errorDiv.innerHTML = errors.map(err => `<div>${err}</div>`).join('');
+            errorDiv.style.display = 'block';
+            window.scrollTo({top: errorDiv.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'});
+            return;
+          }
+          // Submit via AJAX
           const formData = new FormData(contactForm);
-          const response = await fetch(contactForm.action, {
-            method: contactForm.method,
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-          });
-          if (response.ok) {
-            result.textContent = "Thank you! Your message has been sent.";
-            contactForm.reset();
-          } else {
-            result.textContent = "Something went wrong. Please try again.";
+          try {
+            const response = await fetch(contactForm.action, {
+              method: contactForm.method,
+              body: formData,
+              headers: { 'Accept': 'application/json' }
+            });
+            if (response.ok) {
+              contactForm.reset();
+              successDiv.style.display = 'block';
+              errorDiv.style.display = 'none';
+            } else {
+              const data = await response.json();
+              errorDiv.innerHTML = (data.errors && data.errors.length) ? data.errors.map(err => `<div>${err.message}</div>`).join('') : 'Something went wrong. Please try again.';
+              errorDiv.style.display = 'block';
+            }
+          } catch {
+            errorDiv.innerHTML = 'Something went wrong. Please try again.';
+            errorDiv.style.display = 'block';
           }
         });
       }
