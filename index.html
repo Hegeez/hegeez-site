@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hegeez Global Energy Security | Non-Hormuz Oil Brokerage & Lithium Spodumene Scouting Ethiopia</title>
+  <title>Hegeez Global Energy Security | Non-Hormuz Oil Brokerage</title>
+
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon.png?v=2">
+  <link rel="apple-touch-icon" href="favicon.png?v=2">
+
   <meta name="description" content="Hegeez Global Energy Security: Strategic energy brokerage, critical mineral supply chain security. EO 14154 compliant Lithium Spodumene scouting Ethiopia and Bonny Light crude oil brokerage West Africa.">
   <meta name="keywords" content="Lithium Spodumene scouting Ethiopia, Non-Hormuz oil brokerage, EO 14154 energy compliance, Bonny Light crude Nigeria, critical minerals supply chain, energy security 2026, Kenticha Guji lithium, strategic energy brokerage">
   <meta property="og:title" content="Hegeez Global Energy Security | Strategic Energy Brokerage">
@@ -1730,57 +1734,55 @@
         <!-- Form -->
         <div class="liaison-form">
           <div class="label" style="margin-bottom:28px;color:rgba(0,239,255,0.7);">Secure Enquiry Portal</div>
+          
+          <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="fc03da04-c509-4eb3-8d62-c2bbd89cd9f9">
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="f-name">Full Name</label>
-              <input class="form-input" type="text" id="f-name" name="name" placeholder="Full name" autocomplete="name">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-name">Full Name</label>
+                <input class="form-input" type="text" id="f-name" name="name" placeholder="Full name" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-org">Organisation</label>
+                <input class="form-input" type="text" id="f-org" name="organisation" placeholder="Company / Fund" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="f-org">Organisation</label>
-              <input class="form-input" type="text" id="f-org" name="organisation" placeholder="Company / Fund">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-email">Email Address</label>
+                <input class="form-input" type="email" id="f-email" name="email" placeholder="institutional@company.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-phone">Phone</label>
+                <input class="form-input" type="tel" id="f-phone" name="phone" placeholder="+1 or +44..." required>
+              </div>
             </div>
-          </div>
 
-          <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="f-email">Email Address</label>
-              <input class="form-input" type="email" id="f-email" name="email" placeholder="institutional@company.com" autocomplete="email">
+              <label class="form-label" for="f-interest">Primary Interest</label>
+              <select class="form-select" id="f-interest" name="interest" required>
+                <option value="" disabled selected>Select commodity / service</option>
+                <option value="bonny-light">Bonny Light Crude Liftings — Nigeria</option>
+                <option value="spodumene">Lithium Spodumene Offtake — Ethiopia</option>
+                <option value="dual">Dual Commodity — Both Corridors</option>
+                <option value="compliance">EO 14154 Compliance Advisory</option>
+              </select>
             </div>
+
             <div class="form-group">
-              <label class="form-label" for="f-phone">Phone</label>
-              <input class="form-input" type="tel" id="f-phone" name="phone" placeholder="+1 or +44..." autocomplete="tel">
+              <label class="form-label" for="f-message">Strategic Context</label>
+              <textarea class="form-textarea" id="f-message" name="message" placeholder="Briefly describe your supply chain requirement, timeline, and any compliance constraints..."></textarea>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label" for="f-interest">Primary Interest</label>
-            <select class="form-select" id="f-interest" name="interest">
-              <option value="" disabled selected>Select commodity / service</option>
-              <option value="bonny-light">Bonny Light Crude Liftings — Nigeria</option>
-              <option value="spodumene">Lithium Spodumene Offtake — Ethiopia</option>
-              <option value="dual">Dual Commodity — Both Corridors</option>
-              <option value="compliance">EO 14154 Compliance Advisory</option>
-              <option value="advisory">Strategic Supply Chain Advisory</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="f-volume">Estimated Volume / Requirement</label>
-            <input class="form-input" type="text" id="f-volume" name="volume" placeholder="e.g. 50,000 bbls/month or 200 MT Spodumene">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="f-message">Strategic Context</label>
-            <textarea class="form-textarea" id="f-message" name="message" placeholder="Briefly describe your supply chain requirement, timeline, and any compliance constraints..."></textarea>
-          </div>
-
-          <button class="form-submit" type="button" onclick="handleSubmit(this)">
-            Submit Confidential Enquiry
-          </button>
+            <button class="form-submit" type="submit">
+              Submit Confidential Enquiry
+            </button>
+          </form>
 
           <p style="font-family:'Inter',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);margin-top:14px;line-height:1.6;">
-            All enquiries are confidential. Response within 24 business hours. Hegeez Global Energy Security processes data in accordance with UK GDPR.
+            All enquiries are confidential. Response within 24 business hours.
           </p>
         </div>
       </div>
