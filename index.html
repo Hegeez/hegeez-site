@@ -1295,27 +1295,56 @@
     document.addEventListener('DOMContentLoaded', function () {
       const tickerTrack = document.querySelector('.ticker-track');
       const trackWrapper = document.querySelector('.ticker-track-wrapper');
-      if (!tickerTrack || !trackWrapper) return;
-
-      // Set initial position: start just outside the right edge
-      function getStart() {
-        return trackWrapper.offsetWidth;
-      }
-      function getEnd() {
-        return -tickerTrack.offsetWidth;
-      }
-
-      let pos = getStart();
-      function animate() {
-        pos -= 1; // speed (px per frame)
-        if (pos <= getEnd()) {
-          pos = getStart();
+      if (tickerTrack && trackWrapper) {
+        function getStart() {
+          return trackWrapper.offsetWidth;
         }
-        tickerTrack.style.transform = `translateX(${pos}px)`;
-        requestAnimationFrame(animate);
+        function getEnd() {
+          return -tickerTrack.offsetWidth;
+        }
+        let pos = getStart();
+        function animate() {
+          pos -= 1; // speed (px per frame)
+          if (pos <= getEnd()) {
+            pos = getStart();
+          }
+          tickerTrack.style.transform = `translateX(${pos}px)`;
+          requestAnimationFrame(animate);
+        }
+        tickerTrack.style.willChange = 'transform';
+        animate();
       }
-      tickerTrack.style.willChange = 'transform';
-      animate();
+
+      // Global Market Bar: Detect country and show USD to local currency
+      const tickerSpan = document.getElementById('currency-ticker');
+      if (tickerSpan) {
+        fetch('https://ipapi.co/json/')
+          .then(r => r.json())
+          .then(ipData => {
+            const country = ipData.country_name;
+            const currency = ipData.currency;
+            if (!currency || currency === 'USD') {
+              tickerSpan.textContent = `Global Market: United States Dollar (USD)`;
+              return;
+            }
+            fetch(`https://api.exchangerate.host/latest?base=USD&symbols=${currency}`)
+              .then(r => r.json())
+              .then(rateData => {
+                const rate = rateData.rates && rateData.rates[currency];
+                if (rate) {
+                  tickerSpan.textContent = `USD → ${currency} (${country}): 1 USD = ${rate.toFixed(2)} ${currency}`;
+                } else {
+                  tickerSpan.textContent = `Global Market: United States Dollar (USD)`;
+                }
+              })
+              .catch(() => {
+                tickerSpan.textContent = `Global Market: United States Dollar (USD)`;
+              });
+          })
+          .catch(() => {
+            tickerSpan.textContent = `Global Market: United States Dollar (USD)`;
+          });
+      }
     });
   </script>
 
