@@ -1317,27 +1317,27 @@
 
       // Global Market Bar: Detect country and show USD to local currency
       async function updateCurrencyTicker() {
-        const tickerSpan = document.getElementById('currency-ticker');
-        if (!tickerSpan) return;
+        const ticker = document.getElementById('currency-ticker');
         try {
-          const ipRes = await fetch('https://ipapi.co/json/');
-          const ipData = await ipRes.json();
-          const country = ipData.country_name;
-          const currency = ipData.currency;
-          if (!currency || currency === 'USD') {
-            tickerSpan.textContent = 'GLOBAL MARKET ACCESS · USD SETTLED';
-            return;
-          }
+          // 1. Get User Currency & Country via IP
+          const geoRes = await fetch('https://ipapi.co/json/');
+          const geoData = await geoRes.json();
+          const userCurrency = geoData.currency;
+          const userCountry = geoData.country_name;
+
+          // 2. Get Live Exchange Rate
           const rateRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
           const rateData = await rateRes.json();
-          const rate = rateData.rates && rateData.rates[currency];
+          const rate = rateData.rates[userCurrency];
+
+          // 3. Update Display
           if (rate) {
-            tickerSpan.textContent = `1 USD = ${rate.toFixed(2)} ${currency} (${country})`;
+            ticker.innerHTML = `1 USD = ${rate.toFixed(2)} ${userCurrency} (${userCountry})`;
           } else {
-            tickerSpan.textContent = 'GLOBAL MARKET ACCESS · USD SETTLED';
+            ticker.innerHTML = "GLOBAL MARKET ACCESS · USD SETTLED";
           }
         } catch (e) {
-          tickerSpan.textContent = 'GLOBAL MARKET ACCESS · USD SETTLED';
+          ticker.innerHTML = "GLOBAL MARKET ACCESS · SECURE ACCESS";
         }
       }
       updateCurrencyTicker();
