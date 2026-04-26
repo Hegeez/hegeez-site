@@ -43,7 +43,15 @@
        RESET & BASE
     ============================================= */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--white);
@@ -99,17 +107,43 @@
       color: var(--gray-500);
     }
 
-    /* =============================================
-       TICKER BAR
-    ============================================= */
-    .ticker-bar {
-      background: var(--navy);
-      border-bottom: 1px solid var(--navy-light);
-      height: 40px;
-      overflow: hidden;
+    /* 1. Global Market Access Bar (Highest) */
+    #currency-ticker-bar {
       position: sticky;
       top: 0;
+      height: 32px;
+      z-index: 1100;
+      margin: 0;
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--navy-light);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 2. Main Ticker Bar (Middle) */
+    .ticker-bar {
+      position: sticky;
+      top: 32px;
+      height: 40px;
+      z-index: 1050;
+      margin: 0;
+      background: var(--navy);
+      border-bottom: 1px solid var(--navy-light);
+      overflow: hidden;
+    }
+
+    /* 3. Main Navigation (Bottom of the stack) */
+    .nav {
+      position: sticky;
+      top: 72px;
+      height: 80px;
       z-index: 1000;
+      margin: 0;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--gray-100);
+      box-shadow: 0 2px 20px rgba(5, 15, 44, 0.08);
     }
     .ticker-inner {
       display: flex;
@@ -186,8 +220,9 @@
       height: 80px;
       position: sticky;
       top: 40px;
-      z-index: 999;
-      box-shadow: 0 2px 20px rgba(5,15,44,0.06);
+      z-index: 1000;
+      box-shadow: 0 4px 24px 0 rgba(5,15,44,0.08), 0 1.5px 0 rgba(0,0,0,0.03);
+      /* Ensures nav stays above content and is always visible */
     }
     .nav-inner {
       display: flex;
@@ -301,6 +336,8 @@
        HERO
     ============================================= */
     .hero {
+      margin-top: 0 !important;
+      padding-top: 0;
       background: var(--navy);
       min-height: 92vh;
       display: flex;
@@ -1193,50 +1230,94 @@
   </style>
 </head>
 <body>
-  <!-- Live Currency Ticker (USD to Local) -->
-  <div id="currency-ticker-bar" style="height:32px;background:var(--navy-mid);border-bottom:1px solid var(--navy-light);font-size:13px;display:flex;align-items:center;justify-content:center;">
-    <span id="currency-ticker" style="color:var(--cyan);font-weight:700;">Detecting location...</span>
-  </div>
 
+  <header class="main-header">
+    <div id="currency-ticker-bar" style="height:32px;background:var(--navy-mid);border-bottom:1px solid var(--navy-light);font-size:13px;display:flex;align-items:center;justify-content:center;">
+      <span id="currency-ticker" style="color:var(--cyan);font-weight:700;">Detecting location...</span>
+    </div>
 
-
-  <!-- ===================== NAVIGATION ===================== -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
-    <div class="container">
-      <div class="nav-inner">
-        <a href="#" class="nav-logo" aria-label="Hegeez Global Energy Security - Home">
-          <div class="nav-logo-img-wrapper">
-            <img src="/crest.png"
-                 alt="Hegeez Crest Logo">
+    <div class="ticker-bar">
+      <!-- Example ticker content -->
+      <div class="ticker-inner">
+        <span class="ticker-label">LIVE MARKETS</span>
+        <div class="ticker-track-wrapper">
+          <div class="ticker-track">
+            <span class="ticker-item"><span class="ti-name">Brent</span> <span class="ti-value">$98.41</span> <span class="ti-change ti-up">+0.7%</span></span>
+            <span class="ti-sep">·</span>
+            <span class="ticker-item"><span class="ti-name">Spodumene</span> <span class="ti-value">$2,460</span> <span class="ti-change">0.0%</span></span>
+            <span class="ti-sep">·</span>
+            <span class="ticker-item"><span class="ti-name">Bonny Light</span> <span class="ti-value">$136.74</span> <span class="ti-change">-0.2%</span></span>
           </div>
-          <div class="nav-logo-text">
-            <span class="nav-logo-name">HEGEEZ</span>
-            <span class="nav-logo-sub">Global Energy Security</span>
-          </div>
-        </a>
-
-        <ul class="nav-menu" role="list">
-          <li><a href="#operations">Our Services</a></li>
-          <li><a href="#intelligence">Market Info</a></li>
-          <li><a href="#compliance">Compliance</a></li>
-          <li><a href="#liaison" class="nav-cta">Contact Desk</a></li>
-        </ul>
-
-        <div class="social-icons" style="display:flex; gap:12px; margin-left:15px; margin-right:10px;">
-          <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--navy)"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-          </a>
-          
-          <a href="https://x.com/hegeezGlobal" target="_blank" aria-label="X">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--navy)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-        </div>
-        <div class="nav-hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-          <span></span><span></span><span></span>
         </div>
       </div>
     </div>
-  </nav>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-inner">
+          <a href="#" class="nav-logo" aria-label="Hegeez Global Energy Security - Home">
+            <div class="nav-logo-img-wrapper">
+              <img src="/crest.png"
+                   alt="Hegeez Crest Logo">
+            </div>
+            <div class="nav-logo-text">
+              <span class="nav-logo-name">HEGEEZ</span>
+              <span class="nav-logo-sub">Global Energy Security</span>
+            </div>
+          </a>
+
+          <ul class="nav-menu" role="list">
+            <li><a href="#operations">Our Services</a></li>
+            <li><a href="#intelligence">Market Info</a></li>
+            <li><a href="#compliance">Compliance</a></li>
+            <li><a href="#liaison" class="nav-cta">Contact Desk</a></li>
+          </ul>
+
+          <div class="social-icons" style="display:flex; gap:12px; margin-left:15px; margin-right:10px;">
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--navy)"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            
+            <a href="https://x.com/hegeezGlobal" target="_blank" aria-label="X">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--navy)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+          <div class="nav-hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <script>
+    // Animate the ticker-track to move smoothly from right to left edge, then reset
+    document.addEventListener('DOMContentLoaded', function () {
+      const tickerTrack = document.querySelector('.ticker-track');
+      const trackWrapper = document.querySelector('.ticker-track-wrapper');
+      if (!tickerTrack || !trackWrapper) return;
+
+      // Set initial position: start just outside the right edge
+      function getStart() {
+        return trackWrapper.offsetWidth;
+      }
+      function getEnd() {
+        return -tickerTrack.offsetWidth;
+      }
+
+      let pos = getStart();
+      function animate() {
+        pos -= 1; // speed (px per frame)
+        if (pos <= getEnd()) {
+          pos = getStart();
+        }
+        tickerTrack.style.transform = `translateX(${pos}px)`;
+        requestAnimationFrame(animate);
+      }
+      tickerTrack.style.willChange = 'transform';
+      animate();
+    });
+  </script>
 
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu" role="navigation">
